@@ -1,7 +1,8 @@
 package com.caldeira.demo.resources;
 
 import com.caldeira.demo.domain.User;
-import com.caldeira.demo.dto.UserDTO;
+import com.caldeira.demo.dto.UserResponseDTO;
+import com.caldeira.demo.dto.UserUpdateDTO;
 import com.caldeira.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +20,23 @@ public class UserResource {
     @Autowired
     private UserService service;
     @GetMapping
-    public ResponseEntity<List<UserDTO>> findAll(){
+    public ResponseEntity<List<UserResponseDTO>> findAll(){
         List<User> list = service.findAll();
-        List<UserDTO> dtos = list.stream()
-                .map(UserDTO::new)
+        List<UserResponseDTO> dtos = list.stream()
+                .map(UserResponseDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(dtos);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id){
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable String id){
         User user = service.findById(id);
-        return ResponseEntity.ok().body(new UserDTO(user));
+        return ResponseEntity.ok().body(new UserResponseDTO(user));
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody UserDTO dto){
-        User user = service.fromDTO(dto);
+    public ResponseEntity<Void> insert(@RequestBody UserResponseDTO dto){
+        User user = service.fromResponseDTO(dto);
         user = service.insert(user);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -45,8 +46,15 @@ public class UserResource {
     }
 
     @DeleteMapping (value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable String id){
+    public ResponseEntity<Void> delete(@PathVariable String id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserUpdateDTO> update(@RequestBody UserUpdateDTO dto, @PathVariable String id){
+        UserUpdateDTO dtoWithId = new UserUpdateDTO(id, dto.name(), dto.email());
+        service.update(dtoWithId);
         return ResponseEntity.noContent().build();
     }
 }

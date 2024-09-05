@@ -1,6 +1,5 @@
 package com.caldeira.demo.domain;
 
-import com.caldeira.demo.dto.UserDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
