@@ -1,2 +1,2 @@
 # spring-boot-mongodb
- My first contact with NoSQL
+ My first project using NoSQL
