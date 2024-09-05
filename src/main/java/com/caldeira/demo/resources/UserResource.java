@@ -3,7 +3,6 @@ package com.caldeira.demo.resources;
 import com.caldeira.demo.domain.User;
 import com.caldeira.demo.dto.UserDTO;
 import com.caldeira.demo.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class UserResource {
     public ResponseEntity<List<UserDTO>> findAll(){
         List<User> list = service.findAll();
         List<UserDTO> dtos = list.stream()
-                .map(u -> new UserDTO(u))
+                .map(UserDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(dtos);
     }
@@ -43,5 +42,11 @@ public class UserResource {
                 .path("/{id}").buildAndExpand(user.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping (value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
