@@ -21,22 +21,7 @@ public class PostService {
     }
 
     public List<Post> findByTitle(String text){
-        return repo.findByTitleContainingIgnoreCase(text);
+        return repo.searchTitle(text);
     }
-
-//    public Post insert(Post obj){
-//        return repo.insert(obj);
-//    }
-//
-//    public void delete(String id){
-//        findById(id);
-//        repo.deleteById(id);
-//    }
-//
-//    public void update(UserUpdateDTO dto){
-//        Post entity = repo.findById(dto.id()).orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: "+dto.id()));
-//    }
-
-
-
+    
 }
