@@ -6,6 +6,7 @@ import com.caldeira.demo.dto.AuthorDTO;
 import com.caldeira.demo.dto.CommentDTO;
 import com.caldeira.demo.repository.PostRepository;
 import com.caldeira.demo.repository.UserRepository;
+import com.caldeira.demo.resources.util.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -51,5 +52,7 @@ public class Instantiation implements CommandLineRunner {
 
         maria.getPosts().addAll(Arrays.asList(post1,post2));
         userRepository.save(maria);
+
+
     }
 }
