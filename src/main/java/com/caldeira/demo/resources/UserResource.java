@@ -1,5 +1,6 @@
 package com.caldeira.demo.resources;
 
+import com.caldeira.demo.domain.Post;
 import com.caldeira.demo.domain.User;
 import com.caldeira.demo.dto.UserResponseDTO;
 import com.caldeira.demo.dto.UserUpdateDTO;
@@ -56,5 +57,11 @@ public class UserResource {
         UserUpdateDTO dtoWithId = new UserUpdateDTO(id, dto.name(), dto.email());
         service.update(dtoWithId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
