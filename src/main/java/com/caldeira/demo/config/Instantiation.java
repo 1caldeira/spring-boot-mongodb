@@ -2,6 +2,7 @@ package com.caldeira.demo.config;
 
 import com.caldeira.demo.domain.Post;
 import com.caldeira.demo.domain.User;
+import com.caldeira.demo.dto.AuthorDTO;
 import com.caldeira.demo.repository.PostRepository;
 import com.caldeira.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,13 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null,sdf.parse("21/03/2024").toInstant(),"Partiu viagem", "Vou viajar pra Assis. Abraços!", maria);
-        Post post2 = new Post(null,sdf.parse("21/03/2024").toInstant(),"Bom dia!", "Acordei feliz hoje!", maria);
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+        AuthorDTO dto = new AuthorDTO(maria.getId(), maria.getName());
+
+
+        Post post1 = new Post(null,sdf.parse("21/03/2024").toInstant(),"Partiu viagem", "Vou viajar pra Assis. Abraços!",dto);
+        Post post2 = new Post(null,sdf.parse("21/03/2024").toInstant(),"Bom dia!", "Acordei feliz hoje!", dto);
+
         postRepository.saveAll(Arrays.asList(post1,post2));
     }
 }
